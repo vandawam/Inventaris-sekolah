@@ -16,8 +16,10 @@ class AdminController extends Controller
         $barang = Barang::count();
         $admin = User::where('role', 'admin')->count();
         $petugas = User::where('role', 'petugas')->count();
+        $Druangan = Ruangan::orderBy('updated_at', 'desc')->take(3)->get();
+        $Dbarang = Barang::orderBy('updated_at', 'desc')->with('ruangan')->take(3)->get();
 
-        return view('admin.index', compact('title', 'ruangan', 'barang', 'admin', 'petugas'));
+        return view('admin.index', compact('title', 'ruangan', 'barang', 'admin', 'petugas', 'Druangan', 'Dbarang'));
     }
 
     public function ruangan(Request $request)
