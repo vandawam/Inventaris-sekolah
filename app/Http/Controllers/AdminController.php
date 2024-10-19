@@ -19,4 +19,19 @@ class AdminController extends Controller
 
         return view('admin.index', compact('title', 'ruangan', 'barang', 'admin', 'petugas'));
     }
+
+    public function ruangan(Request $request)
+    {
+        $search = $request->query('search');
+        $data = Ruangan::with('Upetugas', 'barangs')
+                        ->when($search, function ($query) use ($search) {
+                            return $query->where('nama', 'like', '%' . $search . '%')
+                                         ->orWhere('status', 'like', '%' . $search . '%');
+                        })
+                        ->get();
+        $title = 'Ruangan';
+
+        // dd($data);
+        return view('admin.pages.ruangan', compact('title', 'data'));
+    }
 }

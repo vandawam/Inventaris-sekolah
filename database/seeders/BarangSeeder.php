@@ -14,161 +14,161 @@ class BarangSeeder extends Seeder
     public function run(): void
     {
         Barang::create([
-            'id_ruangan' => 1,
+            'ruangan_id' => 1,
             'nama' => 'Penghapus',
             'kategori' => 'Penghapus',
             'status' => 'Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 1,
+            'ruangan_id' => 1,
             'nama' => 'Penggaris',
             'kategori' => 'Penggaris',
             'status' => 'Tidak Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 1,
+            'ruangan_id' => 1,
             'nama' => 'Buku majalah sains',
             'kategori' => 'Buku',
             'status' => 'Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 1,
+            'ruangan_id' => 1,
             'nama' => 'Meja guru',
             'kategori' => 'Meja',
             'status' => 'Tidak Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 1,
+            'ruangan_id' => 1,
             'nama' => 'Meja murid',
             'kategori' => 'Meja',
             'status' => 'Tidak Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 1,
+            'ruangan_id' => 1,
             'nama' => 'Meja murid',
             'kategori' => 'Meja',
             'status' => 'Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 1,
+            'ruangan_id' => 1,
             'nama' => 'Meja murid',
             'kategori' => 'Meja',
             'status' => 'Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 2,
+            'ruangan_id' => 2,
             'nama' => 'Meja guru',
             'kategori' => 'Meja',
             'status' => 'Tidak Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 2,
+            'ruangan_id' => 2,
             'nama' => 'Meja murid',
             'kategori' => 'Meja',
             'status' => 'Tidak Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 2,
+            'ruangan_id' => 2,
             'nama' => 'Meja murid',
             'kategori' => 'Meja',
             'status' => 'Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 2,
+            'ruangan_id' => 2,
             'nama' => 'Meja murid',
             'kategori' => 'Meja',
             'status' => 'Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 3,
+            'ruangan_id' => 3,
             'nama' => 'Meja guru',
             'kategori' => 'Meja',
             'status' => 'Tidak Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 3,
+            'ruangan_id' => 3,
             'nama' => 'Meja murid',
             'kategori' => 'Meja',
             'status' => 'Tidak Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 3,
+            'ruangan_id' => 3,
             'nama' => 'Meja murid',
             'kategori' => 'Meja',
             'status' => 'Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 3,
+            'ruangan_id' => 3,
             'nama' => 'Meja murid',
             'kategori' => 'Meja',
             'status' => 'Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 4,
+            'ruangan_id' => 4,
             'nama' => 'Buku mapel Matematika',
             'kategori' => 'Buku',
             'status' => 'Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 4,
+            'ruangan_id' => 4,
             'nama' => 'Buku mapel Matematika',
             'kategori' => 'Buku',
             'status' => 'Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 4,
+            'ruangan_id' => 4,
             'nama' => 'Buku mapel Matematika',
             'kategori' => 'Buku',
             'status' => 'Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 4,
+            'ruangan_id' => 4,
             'nama' => 'Buku mapel Fisika',
             'kategori' => 'Buku',
             'status' => 'Baru',
         ]);
 
         Barang::create([
-            'id_ruangan' => 4,
+            'ruangan_id' => 4,
             'nama' => 'Buku mapel Fisika',
             'kategori' => 'Buku',
             'status' => 'Baru',
         ]);
 
         Barang::create([
-            'id_ruangan' => 4,
+            'ruangan_id' => 4,
             'nama' => 'Buku mapel Fisika',
             'kategori' => 'Buku',
             'status' => 'Baru',
         ]);
 
         Barang::create([
-            'id_ruangan' => 4,
+            'ruangan_id' => 4,
             'nama' => 'Komputer petugas 1',
             'kategori' => 'Komputer',
             'status' => 'Layak Pakai',
         ]);
 
         Barang::create([
-            'id_ruangan' => 4,
+            'ruangan_id' => 4,
             'nama' => 'Komputer petugas 2',
             'kategori' => 'Komputer',
             'status' => 'Layak Pakai',

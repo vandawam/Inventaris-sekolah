@@ -13,4 +13,9 @@ class Ruangan extends Model
     {
         return $this->hasMany(Barang::class);
     }
+
+    public function Upetugas()
+    {
+        return $this->belongsTo(User::class, 'petugas');
+    }
 }

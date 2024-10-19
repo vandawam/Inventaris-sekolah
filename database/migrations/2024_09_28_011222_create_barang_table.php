@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('barangs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_ruangan');
+            $table->unsignedBigInteger('ruangan_id');
             $table->string('nama');
             $table->string('kategori');
             $table->string('status');
             $table->timestamps();
 
             // Menambahkan foreign key constraint
-            $table->foreign('id_ruangan')->references('id')->on('ruangans')->onDelete('cascade');
+            $table->foreign('ruangan_id')->references('id')->on('ruangans')->onDelete('cascade');
         });
     }
 
@@ -31,7 +31,7 @@ return new class extends Migration
     {
         Schema::table('barangs', function (Blueprint $table) {
             // Menghapus foreign key constraint
-            $table->dropForeign(['id_ruangan']);
+            $table->dropForeign(['ruangan_id']);
         });
 
         Schema::dropIfExists('barangs');

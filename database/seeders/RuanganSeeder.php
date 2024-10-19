@@ -15,19 +15,19 @@ class RuanganSeeder extends Seeder
     public function run(): void
     {
         Ruangan::create([
-            'nama' => 'Kelas Ruang 1',
+            'nama' => 'Ruang Kelas 1',
             'petugas' => 2,
             'status' => 'Tersedia',
         ]);
 
         Ruangan::create([
-            'nama' => 'Kelas Ruang 2',
+            'nama' => 'Ruang Kelas 2',
             'petugas' => 2,
             'status' => 'Dipakai',
         ]);
 
         Ruangan::create([
-            'nama' => 'Kelas Ruang 3',
+            'nama' => 'Ruang Kelas 3',
             'petugas' => 2,
             'status' => 'Diperbaiki',
         ]);
