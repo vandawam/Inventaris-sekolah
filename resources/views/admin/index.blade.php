@@ -76,9 +76,6 @@
                             Nama
                         </th>
                         <th scope="col" class="px-6 py-3 pb-10">
-                            Petugas
-                        </th>
-                        <th scope="col" class="px-6 py-3 pb-10">
                             Status
                         </th>
                         <th scope="col" class="px-6 py-3 pb-10">
@@ -91,9 +88,6 @@
                         <tr class="bg-white border-b text-center border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="px-2 py-4">
                                 {{ $data->nama }}
-                            </td>
-                            <td class="px-2 py-4">
-                                {{ $data->Upetugas->name }}
                             </td>
                             <td class="px-2 py-4">
                                 {{ $data->status }}

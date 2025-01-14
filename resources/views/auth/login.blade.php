@@ -17,7 +17,7 @@
 
                 {{-- Title --}}
                 <div>
-                    <div class="text-2xl text-center font-semibold text-[#FA6601] mb-3">Login</div>
+                    <div class="text-2xl text-center font-semibold text-blue-800 mb-3">Login</div>
                     <div class="text-center text-[#606060] mb-7">gunakan email Anda untuk Login</div>
                     @if ($errors->any())
                         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
@@ -93,7 +93,7 @@
                         </div>
                     </div>
                     <div class="w-full flex justify-center">
-                        <button class=" bg-[#FA6601] text-white rounded-full py-3 px-16">MASUK</button>
+                        <button class=" bg-blue-800 text-white rounded-full py-3 px-16">MASUK</button>
                     </div>
 
                 </form>

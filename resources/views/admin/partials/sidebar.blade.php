@@ -2,7 +2,7 @@
 <div class="w-44 h-full flex flex-col items-center bg-[#FA6601] border-r border-gray-200 dark:bg-gray-900 dark:border-gray-700 text-white font-medium">
     <div class="h-full py-2 overflow-y-auto w-full bg-[#FA6601] dark:bg-gray-800 text-xs flex justify-center ">
        <ul class="space-y-1  dark:border-gray-700 w-40 ">
-        <p class="text-2xl text-center my-3">Vanda</p>
+        <p class="text-2xl text-center my-3">Inventarisasi</p>
         {{-- Dashboard --}}
         <li>
          @if ($title == 'Admin')

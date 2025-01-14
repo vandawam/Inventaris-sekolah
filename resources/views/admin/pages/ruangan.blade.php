@@ -6,7 +6,7 @@
         <div class="w-full flex justify-between mt-7">
             <div class="flex gap-3 items-center">
                 <div class="bg-[#FA6601] rounded flex items-center justify-center">
-                    <a href="/superadmin/perusahaan/tambah-data" class="flex gap-4 p-2 text-white font-bold">
+                    <a data-modal-target="tambah" data-modal-toggle="tambah" type="button" class="flex gap-4 p-2 text-white font-bold cursor-pointer">
                         <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1.35156 10.6295H19.9094M10.6305 1.35059V19.9084" stroke="white" stroke-width="2.65112" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -33,9 +33,6 @@
                             Nama
                         </th>
                         <th scope="col" class="px-6 py-3 pb-10">
-                            Petugas
-                        </th>
-                        <th scope="col" class="px-6 py-3 pb-10">
                             Status
                         </th>
                         <th scope="col" class="px-6 py-3 pb-10">
@@ -56,9 +53,6 @@
                                 {{ $data->nama }}
                             </td>
                             <td class="px-2 py-4">
-                                {{ $data->Upetugas->name }}
-                            </td>
-                            <td class="px-2 py-4">
                                 {{ $data->status }}
                             </td>
                             <td class="px-2 py-4">
@@ -70,9 +64,19 @@
                             </td>
                         </tr>
                     @endforeach
-
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    {{-- modal tambah ruangan --}}
+    <div id="tambah" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+        <div class="relative w-fit h-full p-4 md:h-auto">
+            <div class="bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="flex items-center justify-between p-5 border-b rounded-t dark:border-gray-600">
+                    haii
+                </div>
+            </div>
         </div>
     </div>
 @endsection

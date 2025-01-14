@@ -15,23 +15,25 @@ div {
 
 body, div {
     scrollbar-width: none; /* Firefox */
-    scrollbar-color: #FA6601 #f1f1f1; /* Firefox */
+    scrollbar-color: #0003ba #0600b6; /* Firefox */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
   ::-webkit-scrollbar {
-    width: 6px; /* Lebar scrollbar */
+    width: 7px; /* Lebar scrollbar */
     height: 2px; /* Tinggi scrollbar */
   }
 
   ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #bfc4f7;
   }
 
   ::-webkit-scrollbar-thumb {
-    background:#FA6601;
-    border-radius: 4px;
+    background:#0003ba;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #FA6601;
+    background: #0003ba;
   }

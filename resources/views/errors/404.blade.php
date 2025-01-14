@@ -16,7 +16,7 @@
         <div class="text-xl">
             Halaman tidak ditemukan
         </div>
-        <div class="mt-7 bg-[#FA6601] px-7 py-2 text-white font-bold rounded-md">
+        <div class="mt-7 bg-blue-800 px-7 py-2 text-white font-bold rounded-md">
             <a href="/">Home</a>
         </div>
     </div>
