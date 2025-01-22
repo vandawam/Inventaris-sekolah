@@ -9,25 +9,62 @@ class Barang extends Model
 {
     use HasFactory;
 
+    protected $table = 'barangs';
+
     protected $fillable = [
-        'lokasi_id', 'nama', 'kategori', 'status', 'detail'
+        'jurusan_id',
+        'lokasi_id',
+        'user_id',
+        'nama',
+        'kategori',
+        'spesifikasi',
+        'sumber_dana',
+        'nilai',
+        'tanggal_beli',
     ];
 
-    // Hook to generate the code
-    // protected static function booted()
-    // {
-    //     static::creating(function ($barang) {
-    //         $year = date('Y');
-    //         $ruanganId = str_pad($barang->ruangan_id, 2, '0', STR_PAD_LEFT); // Ensures 2 digits
-    //         $lastBarang = self::where('ruangan_id', $barang->ruangan_id)
-    //                           ->orderBy('id', 'desc')
-    //                           ->first();
+    /**
+     * Relasi Many-to-One ke Jurusan:
+     * Setiap barang diasosiasikan dengan satu jurusan
+     */
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class);
+    }
 
-    //         $nextNumber = $lastBarang ? ((int)substr($lastBarang->code, -3)) + 1 : 1;
-    //         $nextNumber = str_pad($nextNumber, 3, '0', STR_PAD_LEFT); // Ensures 3 digits
+    /**
+     * Relasi Many-to-One ke Lokasi:
+     * Setiap barang berada pada satu lokasi tertentu
+     */
+    public function lokasi()
+    {
+        return $this->belongsTo(Lokasi::class);
+    }
 
-    //         $barang->code = $year . $ruanganId . $nextNumber;
-    //     });
-    // }
+    /**
+     * Relasi Many-to-One ke User:
+     * Misalnya, user yang mendaftarkan atau bertanggung jawab atas barang
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
+    /**
+     * Relasi One-to-Many ke StatusBarang:
+     * Satu barang bisa memiliki beberapa status (riwayat status)
+     */
+    public function statusBarangs()
+    {
+        return $this->hasOne(StatusBarang::class);
+    }
+
+    /**
+     * Relasi One-to-Many ke RiwayatPerbaikan:
+     * Satu barang bisa memiliki banyak riwayat perbaikan
+     */
+    public function riwayatPerbaikans()
+    {
+        return $this->hasMany(RiwayatPerbaikan::class);
+    }
 }

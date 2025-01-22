@@ -17,14 +17,28 @@
                 </button>
             </form>
         </div>
+        <div>
+            @if ($errors->any())
+            <div class="mt-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
+        </div>
         <div class=" mt-12 flex gap-5 flex-wrap justify-center">
-            @foreach ($ruang as $item)
-                <a href="#"
+            @foreach ($lokasi as $item)
+                <a href="/lokasi/{{ $item->id }}"
                     class="block w-96 shadow-xl p-6 pr-14 bg-gray-50 border-2 border-gray-200 rounded-lg hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-blue-800 dark:text-white">{{ $item->nama }}</h5>
+                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Jurusan : {{ $item->jurusan->nama }}</p>
                     <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Total barang : {{ $item->barangs->count() }}</p>
-                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Status : {{ $item->status }}</p>
+                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400 mb-2">Penanggung jawab : {{ $item->user->name }}</p>
+                    @if ( Auth::check() && $item->user->id == Auth::user()->id)
+                        <p class="font-bold text-sm text-green-500 dark:text-gray-400">Punya Akses</p>
+                    @elseif ( Auth::check() && $item->user->id != Auth::user()->id )
+                        <p class="font-bold text-sm text-red-500 dark:text-gray-400">Tidak Punya Akses</p>
+                    @endif
                 </a>
             @endforeach
         </div>

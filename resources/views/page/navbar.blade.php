@@ -1,15 +1,17 @@
+
 <div class=" w-full flex justify-between px-7 py-5 border-b-2 border-blue-200 shadow-xl bg-blue-800">
     <div class=" text-white font-bold text-xl">
         Inventarisasi
     </div>
+
     <div class=" flex gap-10">
-        @if ($title == 'Ruang')
+        @if ($title == 'Lokasi')
             <div class=" text-white font-bold text-lg border-b-2 px-1 border-white ">
-                <a href="/">Ruang</a>
+                <a href="/">Lokasi</a>
             </div>
         @else
             <div class=" text-white font-bold text-lg hover:border-b-2 px-1 border-white ">
-                <a href="/">Ruang</a>
+                <a href="/">Lokasi</a>
             </div>
         @endif
         @if ($title == 'Barang')
@@ -19,6 +21,15 @@
         @else
             <div class=" text-white font-bold text-lg hover:border-b-2 px-1 border-white ">
                 <a href="/barang">Barang</a>
+            </div>
+        @endif
+        @if ($title == 'Jurusan')
+            <div class=" text-white font-bold text-lg border-b-2 px-1 border-white ">
+                <a href="/jurusan">Jurusan</a>
+            </div>
+        @else
+            <div class=" text-white font-bold text-lg hover:border-b-2 px-1 border-white ">
+                <a href="/jurusan">Jurusan</a>
             </div>
         @endif
         @if (Auth::check())

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('barang_id')->constrained('barangs');
             $table->foreignId('user_id')->constrained('users');
-            $table->date('tanggal_perabaikan');
+            $table->date('tanggal_perbaikan');
             $table->string('harga_perbaikan');
             $table->string('status');
             $table->timestamps();

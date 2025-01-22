@@ -18,15 +18,13 @@
             </form>
         </div>
         <div class=" mt-12 flex gap-5 flex-wrap justify-center">
-            @foreach ($barang as $item)
+            @foreach ($jurusan as $item)
                 <a href="#"
                     class="block w-96 p-6 pr-14 bg-gray-50 border-2 border-gray-200 rounded-lg shadow-xl hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
                     <h5 class=" text-2xl font-bold tracking-tight text-blue-800 dark:text-white">{{ $item->nama }}</h5>
-                    <h3 class="mb-2 text-md font-normal text-gray-700 dark:text-gray-400">{{ $item->code }}</h3>
-                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Ruang : {{ $item->ruangan->nama }}</p>
-                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Status : {{ $item->status }}</p>
-                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Detail : {{ $item->detail }}</p>
+                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Total Ruang : {{ $item->lokasis->count() }}</p>
+                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Total Barang : {{ $item->barangs->count() }}</p>
                 </a>
             @endforeach
         </div>

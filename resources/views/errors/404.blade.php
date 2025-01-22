@@ -16,9 +16,17 @@
         <div class="text-xl">
             Halaman tidak ditemukan
         </div>
-        <div class="mt-7 bg-blue-800 px-7 py-2 text-white font-bold rounded-md">
-            <a href="/">Home</a>
-        </div>
+        @if (Auth::check() && Auth::user()->role == 'admin')
+            <div class="mt-7 bg-blue-800 px-7 py-2 text-white font-bold rounded-md">
+                <a href="/admin">Homse</a>
+            </div>
+            @else
+            <div class="mt-7 bg-blue-800 px-7 py-2 text-white font-bold rounded-md">
+                <a href="/">Home</a>
+            </div>
+
+        @endif
+
     </div>
 </body>
 </html>

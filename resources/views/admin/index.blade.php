@@ -7,7 +7,7 @@
             class="block w-60 shadow-lg p-6 bg-white rounded-xl hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 pl-10">
             <h5 class="mb-2 text-base font-medium tracking-tight text-gray-900 dark:text-white">Total Ruangan </h5>
             <p class="font-bold text-3xl text-gray-700 dark:text-gray-400 mb-2">
-                {{ $ruangan }}
+                {{ $lokasi   }}
 
             </p>
             <p class="font-normal text-xs text-[#4E7E74] dark:text-gray-400 flex items-center gap-2"><span>Lihat
@@ -76,7 +76,7 @@
                             Nama
                         </th>
                         <th scope="col" class="px-6 py-3 pb-10">
-                            Status
+                            Petugas
                         </th>
                         <th scope="col" class="px-6 py-3 pb-10">
                             Total Barang
@@ -84,13 +84,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($Druangan as $data)
+                    @foreach ($Dlokasi as $data)
                         <tr class="bg-white border-b text-center border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="px-2 py-4">
                                 {{ $data->nama }}
                             </td>
                             <td class="px-2 py-4">
-                                {{ $data->status }}
+                                {{ $data->user->name }}
                             </td>
                             <td class="px-2 py-4">
                                 {{ $data->barangs->count() }}
@@ -123,10 +123,10 @@
                                 {{ $data->nama }}
                             </td>
                             <td class="px-2 py-4">
-                                {{ $data->ruangan->nama }}
+                                {{ $data->lokasi->nama }}
                             </td>
                             <td class="px-2 py-4">
-                                {{ $data->status }}
+                                {{ $data->statusBarangs->status }}
                             </td>
                         </tr>
                     @endforeach

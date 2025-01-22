@@ -33,7 +33,7 @@
                             Nama
                         </th>
                         <th scope="col" class="px-6 py-3 pb-10">
-                            Status
+                            Penanggung Jawab
                         </th>
                         <th scope="col" class="px-6 py-3 pb-10">
                             Total Barang
@@ -53,7 +53,7 @@
                                 {{ $data->nama }}
                             </td>
                             <td class="px-2 py-4">
-                                {{ $data->status }}
+                                {{ $data->user->name }}
                             </td>
                             <td class="px-2 py-4">
                                 {{ $data->barangs->count() }}
