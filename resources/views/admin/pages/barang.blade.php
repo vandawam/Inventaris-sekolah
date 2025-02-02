@@ -10,7 +10,7 @@
                         <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1.35156 10.6295H19.9094M10.6305 1.35059V19.9084" stroke="white" stroke-width="2.65112" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        Tambah ruangan
+                        Tambah barang
                     </a>
                 </div>
             </div>
@@ -61,10 +61,10 @@
                                 {{ $data->user->name }}
                             </td>
                             <td class="px-2 py-4">
-                                {{ $data->barangs->count() }}
+                                {{ $data->statusBarangs->status }}
                             </td>
                             <td class="px-2 py-4 text-center">
-                                <a href="/admin/ruangan/{{ $data->id }}"
+                                <a href="/admin/barang/{{ $data->id }}"
                                     class="font-medium bg-[#FA6601] text-white text-xs rounded-lg py-1 px-2 hover:underline">View</a>
                             </td>
                         </tr>
@@ -79,37 +79,81 @@
     <div id="tambah" tabindex="-1"
             class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
             <div class="relative w-fit h-full p-7 md:h-auto">
-                <form action="{{ route('admin.lokasicreate') }}" method="POST">
+                <form action="{{ route('admin.barangcreate') }}" method="POST">
                     @csrf
                     <div class="bg-white rounded-lg shadow dark:bg-gray-700 px-16">
                         <div class="p-5 w-full flex flex-col items-center">
                             <div class="mb-2 flex flex-col w-full">
-                                <label class="mb-1 font-medium text-xs">Nama <span
-                                        style="color: red">*</span></label>
+                                <label class="mb-1 font-medium text-xs">Nama <span style="color: red">*</span></label>
                                 <input type="text" name="nama" id="nama" placeholder="Nama"
-                                    class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2"
-                                    required>
+                                    
+                                    class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2" required>
 
                             </div>
                             <select name="jurusan_id" id=""
-                            class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2">
-                                @foreach ( $jurusan as $item )
-                                <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2">
+                                @foreach ($jurusan as $item)
+                                    <option value="{{ $item->id }}"
+                                        >{{ $item->nama }}
+                                    </option>
                                 @endforeach
                             </select>
                             <select name="user_id" id=""
-                            class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2">
-                                @foreach ( $akun as $item )
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2">
+                                @foreach ($akun as $item)
+                                    <option value="{{ $item->id }}"
+                                        >{{ $item->name }}
+                                    </option>
                                 @endforeach
                             </select>
+                            <select name="lokasi_id" id=""
+                                class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2">
+                                @foreach ($lokasi as $item)
+                                    <option value="{{ $item->id }}"
+                                        >{{ $item->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <div class="mb-2 flex flex-col w-full">
+                                <label class="mb-1 font-medium text-xs">Kategori <span style="color: red">*</span></label>
+                                <input type="text" name="kategori" id="kategori" placeholder="kategori"
+                                    class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2" required>
+
+                            </div>
+                            <div class="mb-2 flex flex-col w-full">
+                                <label class="mb-1 font-medium text-xs">Sumber Dana <span
+                                        style="color: red">*</span></label>
+                                <input type="text" name="sumber_dana" id="sumber_dana" placeholder="sumber_dana"
+                                    class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2" required>
+
+                            </div>
+                            <div class="mb-2 flex flex-col w-full">
+                                <label class="mb-1 font-medium text-xs">Nilai <span style="color: red">*</span></label>
+                                <input type="text" name="nilai" id="nilai" placeholder="nilai"
+                                    class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2" required>
+
+                            </div>
+                            <div class="mb-2 flex flex-col w-full">
+                                <label class="mb-1 font-medium text-xs">Tanggal Beli <span
+                                        style="color: red">*</span></label>
+                                <input type="date" name="tanggal_beli" id="tanggal_beli" placeholder="tanggal_beli"
+                                    class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2" required>
+
+                            </div>
+                            <div class="mb-2 flex flex-col w-full">
+                                <label class="mb-1 font-medium text-xs">Spesifikasi <span
+                                        style="color: red">*</span></label>
+                                <textarea name="spesifikasi" id="" cols="10" rows="3"
+                                    class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2" required></textarea>
+
+                            </div>
                         </div>
                         <div class="flex items-center justify-center p-4 space-x-4">
                             <button type="submit"
                                 class="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-md  focus:outline-none focus:ring-2 focus:ring-red-400">
                                 Kirim
                             </button>
-                            <button type="button" data-modal-hide="editModal"
+                            <button type="button" data-modal-hide="tambah"
                                 class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700  rounded-md focus:outline-none focus:ring-2 focus:ring-red-400">
                                 Batal
                             </button>

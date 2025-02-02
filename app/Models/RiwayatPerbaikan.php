@@ -14,8 +14,9 @@ class RiwayatPerbaikan extends Model
     protected $fillable = [
         'barang_id',
         'user_id',
-        'tanggal_perabaikan',
+        'tanggal_perbaikan',
         'harga_perbaikan',
+        'detail',
         'status',
     ];
 

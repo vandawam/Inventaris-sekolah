@@ -18,13 +18,15 @@ class RiwayatPerbaikanSeeder extends Seeder
                 // Sesuaikan dengan ID barang yang valid di tabel barangs
                 'barang_id'         => rand(1, 5),
                 // Sesuaikan dengan ID user yang valid di tabel users
-                'user_id'           => rand(1, 3),
+                'user_id'           => 6,
                 // Tanggal perbaikan random antara 1 sampai 15 hari yang lalu
                 'tanggal_perbaikan' => now()->subDays(rand(1, 15)),
                 // Nilai perbaikan acak
                 'harga_perbaikan'   => (string) rand(50000, 200000),
+                // Detail perbaikan acak
+                'detail'  => 'Detail ke-' . $i,
                 // Bisa 'selesai', 'proses', atau 'pending', dsb.
-                'status'            => 'selesai',
+                'status'            => 'pending',
             ]);
         }
     }

@@ -13,15 +13,67 @@
             </button>
         </div>
         <div class=" mt-12 flex gap-5 flex-wrap w-full border border-black p-10 rounded-xl shadow-lg">
-            <div class="flex flex-col gap-2 w-[30%] ">
-                <div class=" text-4xl font-extrabold flex gap-5">
+            <div class="flex flex-col gap-2 w-[100%] ">
+                <div class=" text-4xl font-extrabold flex gap-5 items-center w-full relative">
                     {{ $barang->nama }}
+                    <h4 
+                        class="text-xl font-semibold px-4 py-2 text-white rounded-lg
+                        @if ($barang->statusBarangs->status === 'Baik') bg-green-600
+                        @elseif($barang->statusBarangs->status === 'Rusak')
+                                bg-yellow-600
+                        @elseif($barang->statusBarangs->status === 'Hilang')
+                                bg-red-600
+                        @else
+                                bg-gray-600 @endif">
+                        {{ $barang->statusBarangs->status }}
+                    </h4>
+                    <div id="statusModal" tabindex="-1"
+                        class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+                        <div class="relative w-fit h-full p-7 md:h-auto">
+                            <form action="{{ route('barang.status', $barang->id) }}" method="POST">
+                                @csrf
+                                <div class="bg-white rounded-lg shadow dark:bg-gray-700 px-16">
+                                    <div class="p-5 w-full flex flex-col items-center">
+                                        <div class=" text-base mb-4">
+                                            Laporkan barang hilang atau rusak
+                                        </div>
+
+                                        <select name="status" class=" w-52 border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2" id="">
+                                            <option value="Rusak" {{ $barang->statusBarangs->status === 'Rusak' ? 'selected' : '' }}>Rusak</option>
+                                            <option value="Hilang" {{ $barang->statusBarangs->status === 'Hilang' ? 'selected' : '' }}>Hilang</option>
+                                        </select>
+                                        <div>
+                                            <input type="text" name="detail" id="detail"
+                                                placeholder="detail" value="{{ old('detail') }}"
+                                                class=" w-52 border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2"
+                                                >
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-center p-4 space-x-4">
+                                        <button type="submit"
+                                            class="px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-md  focus:outline-none focus:ring-2 focus:ring-red-400">
+                                            Kirim
+                                        </button>
+                                        <button type="button" data-modal-hide="statusModal"
+                                            class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700  rounded-md focus:outline-none focus:ring-2 focus:ring-red-400">
+                                            Batal
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                     <button data-modal-target="editModal" data-modal-toggle="editModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                             class="bi bi-pencil" viewBox="0 0 16 16">
                             <path
                                 d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
                         </svg>
+                    </button>
+                    <button class=" text-red-600 absolute top-2 right-2" data-modal-target="statusModal" data-modal-toggle="statusModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                          </svg>
                     </button>
 
                 </div>
@@ -50,7 +102,48 @@
                     Tanggal Beli : {{ $barang->tanggal_beli }}
                 </div>
             </div>
-            {{-- <div class=" x --}}
+            <div class=" w-full items-center flex flex-col">
+                <div class="text-2xl mt-4 mb-2 font-bold"> Riwayat</div>
+                <table class="w-full border-collapse text-left">
+                    <thead>
+                        <tr class="border-b border-black font-bold">
+                            <th class="px-4 py-2 font-extrabold ">Penanggung Jawab</th>
+                            <th class="px-4 py-2 font-extrabold ">Tanggal Perbaikan</th>
+                            <th class="px-4 py-2 font-extrabold ">Harga Perbaikan</th>
+                            <th class="px-4 py-2 font-extrabold ">Detail</th>
+                            <th class="px-4 py-2 font-extrabold ">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($barang->riwayatPerbaikans()->latest()->get() as $item)
+                            <tr class="border-b border-gray-300 hover:bg-gray-100 transition duration-150">
+                                <!-- Nama (link ke detail barang) -->
+                                <td class="px-4 py-2">
+                                    @if ($item->user->role == 'admin' )
+                                        menunggu konfirmasi
+                                        @else
+                                        {{ $item->user->name}}
+                                    @endif
+                                </td>
+                                <!-- Kategori -->
+                                <td class="px-4 py-2">
+                                    {{ $item->tanggal_perbaikan }}
+                                </td>
+                                <!-- Sumber Dana -->
+                                <td class="px-4 py-2">
+                                    {{ 'Rp ' . number_format($item->harga_perbaikan, 0, ',', '.') }}
+                                </td>
+                                <td class="px-4 py-2">
+                                    {{ $item->detail }}
+                                </td>
+                                <td class="px-4 py-2">
+                                    {{ $item->status }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div id="editModal" tabindex="-1"
             class="fixed top-0 left-0 right-0 z-50 items-center justify-center hidden overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">

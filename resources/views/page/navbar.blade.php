@@ -32,6 +32,11 @@
                 <a href="/jurusan">Jurusan</a>
             </div>
         @endif
+        @if (Auth::check() && Auth::user()->role == 'admin')
+            <div class=" text-white font-bold text-lg hover:border-b-2 px-1 border-white ">
+                <a href="/admin">Admin</a>
+            </div>
+        @endif
         @if (Auth::check())
             <div class=" text-blue-800 bg-white rounded-md px-2 py-1 font-bold text-lg border-b-2 border-white ">
                 <a href="/logout">Logout</a>

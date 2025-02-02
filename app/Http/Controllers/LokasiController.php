@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Jurusan;
 use App\Models\Lokasi;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,15 +15,26 @@ class LokasiController extends Controller
     {
         $search = $request->query('search');
         $raw = Lokasi::with('barangs');
+        $jurusan = Jurusan::all();
+        $user = User::all();
         $title = 'Lokasi';
 
         if ($search) {
             $raw->where('nama', 'LIKE', "%{$search}%");
         }
 
+        // dd($request->query('jurusan'));
+        if ($request->has('jurusan') && $request->query('jurusan') !== null) {
+            $raw->where('jurusan_id', $request->query('jurusan'));
+        }
+
+        if ($request->has('petugas') && $request->query('petugas') !== null) {
+            $raw->where('user_id', $request->query('petugas'));
+        }
+
         $lokasi = $raw->get();
 
-        return view('lokasi.index', compact('title','lokasi'));
+        return view('lokasi.index', compact('title','lokasi', 'jurusan' , 'user'));
     }
 
     public function show($id)
@@ -55,7 +67,7 @@ class LokasiController extends Controller
 
         // Ambil data lokasi dan update isinya
         $lokasi = Lokasi::findOrFail($id);
-        $lokasi->update($validatedData);
+        $lokasi->update($request->all());
 
         $barang = Barang::where('lokasi_id', $id)->get();
         foreach ($barang as $b) {
@@ -64,7 +76,7 @@ class LokasiController extends Controller
             ]);
         }
         // Redirect ke halaman detail lokasi atau ke tempat lain
-        return redirect()->route('Lokasi.show', $lokasi->id)
+        return redirect()->back()
                          ->with('success', 'Data lokasi berhasil diperbarui.');
     }
 
@@ -78,7 +90,7 @@ class LokasiController extends Controller
 
         // Redirect ke halaman list lokasi atau ke tempat lain
         // Misalnya, jika list lokasi ada di route('Lokasi')
-        return redirect()->route('Lokasi')
+        return redirect()->back()
                          ->with('success', 'Data lokasi berhasil dihapus.');
     }
 }

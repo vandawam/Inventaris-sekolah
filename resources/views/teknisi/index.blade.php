@@ -18,30 +18,7 @@
                         </svg>
                     </button>
                 </div>
-    
-                <!-- Form Filter Select -->
-                <div class="flex items-center gap-4 justify-center">
-                    <select name="jurusan" id="jurusan" class="border border-gray-400 rounded-md py-1 text-base" onchange="this.form.submit()">
-                        <option value="">Semua jurusan</option>
-                        @foreach ( $jurusan as $item )
-                            <option value="{{ $item->id }}" {{ request()->query('jurusan') == $item->id ? 'selected' : '' }}>{{ $item->nama }}</option>
-                        @endforeach
-                    </select>
 
-                    <select name="petugas" id="petugas" class="border border-gray-400 rounded-md py-1 text-base" onchange="this.form.submit()">
-                        <option value="">Semua Petugas</option>
-                        @foreach ( $user as $item )
-                            <option value="{{ $item->id }}" {{ request()->query('petugas') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
-                        @endforeach
-                    </select>
-
-                    <select name="lokasi" id="lokasi" class="border border-gray-400 rounded-md py-1 text-base" onchange="this.form.submit()">
-                        <option value="">Semua Lokasi</option>
-                        @foreach ( $lokasi as $item )
-                            <option value="{{ $item->id }}" {{ request()->query('lokasi') == $item->id ? 'selected' : '' }}>{{ $item->nama }}</option>
-                        @endforeach
-                    </select>
-                </div>
             </form>
             @if ($errors->any())
             <div class="mt-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
@@ -50,14 +27,17 @@
             @endif
         </div>
         <div class=" mt-12 flex gap-5 flex-wrap justify-center">
-            @foreach ($barang as $item)
+            @foreach ($data as $item)
                 <a href="/barang/{{ $item->id }}"
                     class="block w-96 p-6 pr-14 bg-gray-50 border-2 border-gray-200 rounded-lg shadow-xl hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
-                    <h5 class=" text-2xl font-bold tracking-tight text-blue-800 dark:text-white">{{ $item->nama }}</h5>
-                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Ruang : {{ $item->lokasi->nama }}</p>
-                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Status : {{ $item->statusBarangs->status }}</p>
-                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Spesifikasi : {{ $item->spesifikasi }}</p>
+                    <h5 class=" text-2xl font-bold tracking-tight text-blue-800 dark:text-white">{{ $item->barang->nama }}</h5>
+                    {{-- <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Ruang : {{ $item->lokasi->nama }}</p>
+                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Status : {{ $item->statusBarangs->status }}</p> --}}
+                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Tanggal : {{ $item->tanggal_perbaikan }}</p>
+                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Harga : {{ $item->harga_perbaikan }}</p>
+                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Detail : {{ $item->detail }}</p>
+                    <p class="font-normal text-sm text-gray-700 dark:text-gray-400">Status : {{ $item->status }}</p>
                     @if ( Auth::check() && $item->user->id == Auth::user()->id)
                         <p class="font-bold text-sm text-green-500 dark:text-gray-400">Punya Akses</p>
                     @elseif ( Auth::check() && $item->user->id != Auth::user()->id )

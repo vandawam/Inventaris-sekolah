@@ -29,10 +29,11 @@ class JurusanController extends Controller
     {
         // Ambil data jurusan berdasarkan id, jika tidak ketemu akan 404
         $jurusan = Jurusan::findOrFail($id);
+        $title = 'Jurusan';
 
         // Tampilkan view jurusan.show dengan data jurusan
         // Sesuaikan nama view atau cara passing data sesuai kebutuhan Anda
-        return view('jurusan.show', compact('jurusan'));
+        return view('jurusan.show', compact('jurusan', 'title'));
     }
 
     /**
@@ -82,7 +83,7 @@ class JurusanController extends Controller
         $jurusan->delete();
 
         // Berikan feedback (misal redirect ke list jurusan)
-        return redirect()->route('Jurusan')
+        return redirect()->back()
                          ->with('success', 'Data jurusan berhasil dihapus.');
     }
 }

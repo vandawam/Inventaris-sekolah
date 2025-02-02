@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('barangs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jurusan_id')->constrained('jurusans');
-            $table->foreignId('lokasi_id')->constrained('lokasis');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('jurusan_id')->constrained('jurusans')->onDelete('cascade');
+            $table->foreignId('lokasi_id')->constrained('lokasis')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('nama');
             $table->string('kategori');
             $table->string('spesifikasi');

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Jurusan;
 use App\Models\Lokasi;
+use App\Models\RiwayatPerbaikan;
+use App\Models\StatusBarang;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +17,9 @@ class BarangController extends Controller
     {
         $search = $request->query('search');
         $raw = Barang::with('lokasi', 'jurusan', 'statusBarangs');
+        $jurusan = Jurusan::all();
+        $user = User::all();
+        $lokasi = Lokasi::all();
         $title = 'Barang';
 
         if ($search) {
@@ -23,9 +29,21 @@ class BarangController extends Controller
             });
         }
 
+        if ($request->has('jurusan') && $request->query('jurusan') !== null) {
+            $raw->where('jurusan_id', $request->query('jurusan'));
+        }
+
+        if ($request->has('petugas') && $request->query('petugas') !== null) {
+            $raw->where('user_id', $request->query('petugas'));
+        }
+
+        if ($request->has('lokasi') && $request->query('lokasi') !== null) {
+            $raw->where('lokasi_id', $request->query('lokasi'));
+        }
+
         $barang = $raw->get();
 
-        return view('barang.index', compact('title','barang'));
+        return view('barang.index', compact('title','barang', 'jurusan' , 'user', 'lokasi'));
     }
 
     public function show($id)
@@ -77,7 +95,7 @@ class BarangController extends Controller
         $barang->update($validatedData);
 
         // Redirect ke halaman detail barang atau ke halaman lain
-        return redirect()->route('Barang.show', $barang->id)
+        return redirect()->back()
                          ->with('success', 'Data barang berhasil diperbarui.');
     }
 
@@ -91,7 +109,34 @@ class BarangController extends Controller
 
         // Redirect ke halaman daftar barang atau ke halaman lain
         // Misalnya, jika daftar barang ada di route('Barang'):
-        return redirect()->route('Barang')
+        return redirect()->back()
                          ->with('success', 'Data barang berhasil dihapus.');
+    }
+
+    public function status(Request $request,$id)
+    {
+        $status = StatusBarang::where('barang_id', $id)->first();
+        $user = User::where('role', 'admin')->first();
+
+        if ($request->status== 'Rusak') {
+            RiwayatPerbaikan::create([
+                'user_id' => $user->id,
+                'barang_id' => $id,
+                'status' => 'Pending',
+                'tanggal_perbaikan' => now()->format('Y-m-d'),
+                'harga_perbaikan' => '0',
+                'detail' =>  $request->detail
+            ]);
+        }
+
+        $data = [
+            'barang_id' => $id,
+            'status' => $request->status
+        ];
+
+        $status->update($data);
+
+        return redirect()->back()
+                         ->with('success', 'Status barang berhasil diperbarui.');
     }
 }

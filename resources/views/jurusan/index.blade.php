@@ -19,7 +19,7 @@
         </div>
         <div class=" mt-12 flex gap-5 flex-wrap justify-center">
             @foreach ($jurusan as $item)
-                <a href="#"
+                <a href="/jurusan/{{ $item->id }}"
                     class="block w-96 p-6 pr-14 bg-gray-50 border-2 border-gray-200 rounded-lg shadow-xl hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
                     <h5 class=" text-2xl font-bold tracking-tight text-blue-800 dark:text-white">{{ $item->nama }}</h5>

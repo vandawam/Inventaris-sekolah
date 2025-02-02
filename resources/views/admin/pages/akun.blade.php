@@ -55,6 +55,7 @@
                                             class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2">
                                             <option value="admin">Admin</option>
                                             <option value="petugas">Petugas</option>
+                                            <option value="teknisi">Teknisi</option>
                                         </select>
                                     </div>
                                     <div class="flex items-center justify-center p-4 space-x-4">
