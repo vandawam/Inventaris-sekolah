@@ -12,37 +12,29 @@ Route::get('/barang', [BarangController::class, 'index'])->name('Barang');
 Route::get('/jurusan', [JurusanController::class, 'index'])->name('Jurusan');
 
 Route::middleware('petugas')->group(function () {
-    // Detail jurusan
     Route::get('/jurusan/{id}', [JurusanController::class, 'show'])
         ->name('Jurusan.show');
 
-    // Tampilkan form edit jurusan
     Route::get('/jurusan/{id}/edit', [JurusanController::class, 'edit'])
         ->name('Jurusan.edit');
 
-    // Proses update jurusan
     Route::put('/jurusan/{id}', [JurusanController::class, 'update'])
         ->name('Jurusan.update');
 
-    // Hapus jurusan
     Route::post('/jurusan/{id}', [JurusanController::class, 'destroy'])
         ->name('Jurusan.destroy');
 });
 
 Route::middleware('petugas')->group(function () {
-    // Detail barang
     Route::get('/barang/{id}', [BarangController::class, 'show'])
         ->name('Barang.show');
 
-    // Tampilkan form edit barang
     Route::get('/barang/{id}/edit', [BarangController::class, 'edit'])
         ->name('Barang.edit');
 
-    // Proses update barang (PUT/PATCH)
     Route::post('/barang/{id}', [BarangController::class, 'update'])
         ->name('Barang.update');
 
-    // Hapus barang
     Route::post('/barangd/{id}', [BarangController::class, 'destroy'])
         ->name('Barang.destroy');
 
@@ -50,50 +42,41 @@ Route::middleware('petugas')->group(function () {
 });
 
 Route::middleware('petugas')->group(function () {
-    // Detail lokasi
     Route::get('/lokasi/{id}', [LokasiController::class, 'show'])
         ->name('Lokasi.show');
 
-    // Tampilkan form edit lokasi
     Route::get('/lokasi/{id}/edit', [LokasiController::class, 'edit'])
         ->name('Lokasi.edit');
 
-    // Proses update lokasi
     Route::post('/lokasi/{id}', [LokasiController::class, 'update'])
         ->name('Lokasi.update');
-    // Atau bisa gunakan PATCH
-    // Route::patch('/lokasi/{id}', [LokasiController::class, 'update'])->name('Lokasi.update');
 
-    // Hapus lokasi
     Route::post('/lokasid/{id}', [LokasiController::class, 'destroy'])
         ->name('Lokasi.destroy');
 });
 
 Route::middleware('auth')->group(function () {
-    // Detail lokasi
     Route::get('/Riwayat/{id}', [RiwayatController::class, 'show'])
         ->name('Riwayat.show');
 
-    // Tampilkan form edit Riwayat
     Route::get('/Riwayat/{id}/edit', [RiwayatController::class, 'edit'])
         ->name('Riwayat.edit');
         
     Route::post('/Riwayat', [RiwayatController::class, 'store'])
         ->name('Riwayat.store');
 
-    // Proses update Riwayat
     Route::post('/Riwayat/{id}', [RiwayatController::class, 'update'])
         ->name('Riwayat.update');
-    // Atau bisa gunakan PATCH
-    // Route::patch('/Riwayat/{id}', [RiwayatController::class, 'update'])->name('Riwayat.update');
 
-    // Hapus Riwayat
     Route::post('/Riwayatd/{id}', [RiwayatController::class, 'destroy'])
         ->name('Riwayat.destroy');
 });
 
 Route::middleware('teknisi')->controller(App\Http\Controllers\TeknisiController::class)->prefix('teknisi')->name('teknisi.')->group(function () {
     Route::get('/', 'index')->name('dashboard');
+    Route::get('/saya', 'saya')->name('saya');
+    Route::get('/detail/{id}', 'detail')->name('detail');
+    Route::get('/riwayat/{id}', 'riwayat')->name('riwayat');
 });
 
 Route::controller(App\Http\Controllers\AuthController::class)->group(function () {

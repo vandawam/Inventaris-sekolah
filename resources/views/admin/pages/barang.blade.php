@@ -116,20 +116,37 @@
                             </select>
                             <div class="mb-2 flex flex-col w-full">
                                 <label class="mb-1 font-medium text-xs">Kategori <span style="color: red">*</span></label>
+                            
+                                <!-- Input text dengan 'list' mengarah ke id 'kategori_list' -->
                                 <input type="text" name="kategori" id="kategori" placeholder="kategori"
-                                    class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2" required>
-
+                                       list="kategori_list"
+                                       class="w-full border-2 border-gray-400 rounded-md py-2 text-xs px-3 mb-2"
+                                       required>
+                            
+                                <!-- Datalist berisi opsi kategori -->
+                                <datalist id="kategori_list">
+                                    @foreach ($kategori as $cat)
+                                        <option value="{{ $cat }}"></option>
+                                    @endforeach
+                                </datalist>
                             </div>
+                            
                             <div class="mb-2 flex flex-col w-full">
                                 <label class="mb-1 font-medium text-xs">Sumber Dana <span
                                         style="color: red">*</span></label>
-                                <input type="text" name="sumber_dana" id="sumber_dana" placeholder="sumber_dana"
+                                <input type="text" name="sumber_dana" id="sumber_dana" placeholder="sumber_dana" list="sumber_list"
                                     class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2" required>
+
+                                    <datalist id="sumber_list">
+                                        @foreach ($sumberDana as $cat)
+                                            <option value="{{ $cat }}"></option>
+                                        @endforeach
+                                    </datalist>
 
                             </div>
                             <div class="mb-2 flex flex-col w-full">
                                 <label class="mb-1 font-medium text-xs">Nilai <span style="color: red">*</span></label>
-                                <input type="text" name="nilai" id="nilai" placeholder="nilai"
+                                <input type="number" name="nilai" id="nilai" placeholder="nilai"
                                     class=" w-full border-2  border-gray-400 rounded-md py-2 text-xs px-3 mb-2" required>
 
                             </div>

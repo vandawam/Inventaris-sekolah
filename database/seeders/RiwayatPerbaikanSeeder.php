@@ -13,21 +13,18 @@ class RiwayatPerbaikanSeeder extends Seeder
     public function run(): void
     {
         // Contoh membuat 10 data riwayat perbaikan secara manual
-        for ($i = 1; $i <= 10; $i++) {
+        $listStatus = ['Pending', 'Proses', 'Selesai'];
+        $barangIds = range(2, 44, 3);
+
+        for ($i = 0; $i <= 45; $i++) {
             RiwayatPerbaikan::create([
-                // Sesuaikan dengan ID barang yang valid di tabel barangs
-                'barang_id'         => rand(1, 5),
-                // Sesuaikan dengan ID user yang valid di tabel users
-                'user_id'           => 6,
-                // Tanggal perbaikan random antara 1 sampai 15 hari yang lalu
+                'barang_id'         => $barangIds[($i) % 15],
+                'user_id'           => rand(2, 8),
                 'tanggal_perbaikan' => now()->subDays(rand(1, 15)),
-                // Nilai perbaikan acak
                 'harga_perbaikan'   => (string) rand(50000, 200000),
-                // Detail perbaikan acak
-                'detail'  => 'Detail ke-' . $i,
-                // Bisa 'selesai', 'proses', atau 'pending', dsb.
-                'status'            => 'pending',
+                'detail'            => 'Detail ke-' . $i,
+                'status'            => $listStatus[rand(0, count($listStatus)-1)],
             ]);
-        }
+        }        
     }
 }

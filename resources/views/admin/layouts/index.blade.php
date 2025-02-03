@@ -11,8 +11,8 @@
     <!-- Tambahkan CSS dan JS di sini -->
 </head>
 
-<body>
-    <div class="w-dvw min-h-screen flex">
+<body class="overflow-x-hidden">
+    <div class="w-dvw min-h-screen flex ">
         <div class="sidebar">
             @include('admin.partials.sidebar')
         </div>

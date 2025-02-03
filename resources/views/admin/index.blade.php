@@ -84,6 +84,9 @@
     </div>
     <div class="flex gap-3 ">
         <div class="w-full border border-gray-500 py-5 px-4 rounded-xl">
+            <div class="font-bold mb-2 w-full text-center">
+                Data Lokasi
+            </div>
             <table class="w-full text-sm text-left rtl:text-right  dark:text-gray-400">
                 <thead class="text-xs text-center text-gray-700 dark:text-gray-400">
                     <tr>
@@ -117,6 +120,9 @@
             </table>
         </div>
         <div class="w-full border border-gray-500 py-5 px-4 rounded-xl">
+            <div class="font-bold mb-2 w-full text-center">
+                Data Barang
+            </div>
             <table class="w-full text-sm text-left rtl:text-right  dark:text-gray-400">
                 <thead class="text-xs text-center text-gray-700 dark:text-gray-400">
                     <tr>
@@ -142,6 +148,53 @@
                             </td>
                             <td class="px-2 py-4">
                                 {{ $data->statusBarangs->status }}
+                            </td>
+                        </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
+        </div>
+        
+
+    </div>
+    <div class="flex gap-3 mt-4">
+        <div class="w-full border border-gray-500 py-5 px-4 rounded-xl">
+            <div class="font-bold mb-2 w-full text-center">
+                Data Riwayat Perbaikan
+            </div>
+            <table class="w-full text-sm text-left rtl:text-right  dark:text-gray-400">
+                <thead class="text-xs text-center text-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 pb-10">
+                            Nama
+                        </th>
+                        <th scope="col" class="px-6 py-3 pb-10">
+                            Tanggal
+                        </th>
+                        <th scope="col" class="px-6 py-3 pb-10">
+                            Harga
+                        </th>
+                        <th scope="col" class="px-6 py-3 pb-10">
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($Driwayat as $data)
+                        <tr class="bg-white border-b text-center border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            
+                            <td class="px-2 py-4">
+                                {{ $data->barang->nama }}
+                            </td>
+                            <td class="px-2 py-4">
+                                {{ $data->tanggal_perbaikan }}
+                            </td>
+                            <td class="px-2 py-4">
+                                Rp {{ number_format($data->harga_perbaikan, 0, ',', '.') }}
+                            </td>
+                            <td class="px-2 py-4">
+                                {{ $data->status }}
                             </td>
                         </tr>
                     @endforeach

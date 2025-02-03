@@ -10,6 +10,7 @@ use App\Models\Ruangan;
 use App\Models\StatusBarang;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -25,8 +26,9 @@ class AdminController extends Controller
         $jurusan = Jurusan::all()->count();
         $Dlokasi = Lokasi::orderBy('updated_at', 'desc')->take(3)->get();
         $Dbarang = Barang::orderBy('updated_at', 'desc')->with('lokasi')->take(3)->get();
+        $Driwayat = RiwayatPerbaikan::orderBy('updated_at', 'desc')->take(3)->get();
 
-        return view('admin.index', compact('title', 'lokasi', 'barang', 'admin', 'petugas', 'Dlokasi', 'Dbarang', 'jurusan'));
+        return view('admin.index', compact('title', 'lokasi', 'barang', 'admin', 'petugas', 'Dlokasi', 'Dbarang', 'jurusan', 'Driwayat'));
     }
 
     public function ruangan(Request $request)
@@ -54,10 +56,12 @@ class AdminController extends Controller
             ->get();
         $jurusan = Jurusan::all();
         $lokasi = Lokasi::all();
+        $kategori = Barang::pluck('kategori')->unique();
+        $sumberDana = Barang::pluck('sumber_dana')->unique();
         $akun = User::where('role', 'petugas')->get();
         $title = 'Barang';
 
-        return view('admin.pages.barang', compact('title', 'data', 'jurusan', 'akun', 'lokasi'));
+        return view('admin.pages.barang', compact('title', 'data', 'jurusan', 'akun', 'lokasi', 'kategori', 'sumberDana'));
     }
 
     public function jurusan(Request $request)
@@ -76,7 +80,7 @@ class AdminController extends Controller
     public function akun()
     {
         $title = 'Akun';
-        $akun = User::all();
+        $akun = User::where('id', '!=', Auth::id())->get();
         return view('admin.pages.akun', compact('title', 'akun'));
     }
 

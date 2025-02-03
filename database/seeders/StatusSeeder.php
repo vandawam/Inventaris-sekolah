@@ -13,19 +13,19 @@ class StatusSeeder extends Seeder
      */
     public function run(): void
     {
-        // Asumsi jumlah barang yang ada di tabel barangs adalah 25 (id: 1 s/d 25).
-        $totalBarangs = 25;
+        $totalBarangs = 45;
 
-        // Array pilihan status
         $listStatus = ['Baik', 'Rusak', 'Hilang'];
 
         $statusBarangs = [];
 
-        // Loop untuk setiap barang
         for ($i = 1; $i <= $totalBarangs; $i++) {
+            
+            $status = $listStatus[($i - 1) % count($listStatus)];
+
             $statusBarangs[] = [
                 'barang_id'  => $i,
-                'status'     => $listStatus[array_rand($listStatus)],
+                'status'     => $status,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

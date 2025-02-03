@@ -16,14 +16,13 @@ class LokasiController extends Controller
         $search = $request->query('search');
         $raw = Lokasi::with('barangs');
         $jurusan = Jurusan::all();
-        $user = User::all();
+        $user = User::where('role', 'petugas')->get();
         $title = 'Lokasi';
 
         if ($search) {
             $raw->where('nama', 'LIKE', "%{$search}%");
         }
 
-        // dd($request->query('jurusan'));
         if ($request->has('jurusan') && $request->query('jurusan') !== null) {
             $raw->where('jurusan_id', $request->query('jurusan'));
         }
@@ -39,7 +38,6 @@ class LokasiController extends Controller
 
     public function show($id)
     {
-        // Ambil data lokasi berdasarkan id
         $title = 'Lokasi';
         $lokasi = Lokasi::findOrFail($id);
         $jurusan = Jurusan::all();
@@ -49,23 +47,16 @@ class LokasiController extends Controller
                              ->withErrors(['message' => 'Anda tidak memiliki akses ke lokasi ini.']);
         }
 
-        // Tampilkan view 'lokasi.show' dengan data lokasi
         return view('lokasi.show', compact('lokasi', 'title', 'jurusan'));
     }
 
-    /**
-     * Memperbarui data lokasi (Route: PUT /lokasi/{id}).
-     */
     public function update(Request $request, $id)
     {
-        // (Opsional) Validasi data
         $validatedData = $request->validate([
             'jurusan_id' => 'required|integer',
             'nama'       => 'required|string|max:255',
-            // Tambahkan validasi lain jika diperlukan
         ]);
 
-        // Ambil data lokasi dan update isinya
         $lokasi = Lokasi::findOrFail($id);
         $lokasi->update($request->all());
 
@@ -75,21 +66,15 @@ class LokasiController extends Controller
                 'jurusan_id' => $validatedData['jurusan_id']
             ]);
         }
-        // Redirect ke halaman detail lokasi atau ke tempat lain
         return redirect()->back()
                          ->with('success', 'Data lokasi berhasil diperbarui.');
     }
 
-    /**
-     * Menghapus data lokasi (Route: DELETE /lokasi/{id}).
-     */
     public function destroy($id)
     {
         $lokasi = Lokasi::findOrFail($id);
         $lokasi->delete();
 
-        // Redirect ke halaman list lokasi atau ke tempat lain
-        // Misalnya, jika list lokasi ada di route('Lokasi')
         return redirect()->back()
                          ->with('success', 'Data lokasi berhasil dihapus.');
     }

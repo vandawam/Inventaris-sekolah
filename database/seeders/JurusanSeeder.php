@@ -14,11 +14,11 @@ class JurusanSeeder extends Seeder
     public function run(): void
     {
         $jurusans = [
-            ['nama' => 'Teknik Informatika', 'created_at' => now(), 'updated_at' => now()],
-            ['nama' => 'Sistem Informasi', 'created_at' => now(), 'updated_at' => now()],
-            ['nama' => 'Teknik Elektro', 'created_at' => now(), 'updated_at' => now()],
+            ['nama' => 'Rekayasa Perangkat Lunak', 'created_at' => now(), 'updated_at' => now()],
             ['nama' => 'Teknik Mesin', 'created_at' => now(), 'updated_at' => now()],
-            ['nama' => 'Teknik Sipil', 'created_at' => now(), 'updated_at' => now()],
+            ['nama' => 'Teknik Elektronika', 'created_at' => now(), 'updated_at' => now()],
+            ['nama' => 'Teknik Sepeda Motor', 'created_at' => now(), 'updated_at' => now()],
+            ['nama' => 'Umum', 'created_at' => now(), 'updated_at' => now()],
         ];
 
         DB::table('jurusans')->insert($jurusans);

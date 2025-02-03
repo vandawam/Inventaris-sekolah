@@ -21,29 +21,29 @@ class UserSeeder extends Seeder
             'role' => 'admin',
         ]);
         User::create([
-            'name' => 'suprapto1',
-            'email' => 'suprapto1@example.com',
+            'name' => 'suprapto',
+            'email' => 'suprapto@example.com',
             'email_verified_at' => now(),
             'password' => Hash::make('88888888'),
             'role' => 'petugas',
         ]);
         User::create([
-            'name' => 'suprapto2',
-            'email' => 'suprapto2@example.com',
+            'name' => 'supratman',
+            'email' => 'supratman@example.com',
             'email_verified_at' => now(),
             'password' => Hash::make('88888888'),
             'role' => 'petugas',
         ]);
         User::create([
-            'name' => 'suprapto3',
-            'email' => 'suprapto3@example.com',
+            'name' => 'sucipto',
+            'email' => 'sucipto@example.com',
             'email_verified_at' => now(),
             'password' => Hash::make('88888888'),
             'role' => 'petugas',
         ]);
         User::create([
-            'name' => 'suprapto4',
-            'email' => 'suprapto4@example.com',
+            'name' => 'srikansa',
+            'email' => 'srikansa@example.com',
             'email_verified_at' => now(),
             'password' => Hash::make('88888888'),
             'role' => 'petugas',
@@ -51,6 +51,20 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'aripudin',
             'email' => 'aripudin@example.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('88888888'),
+            'role' => 'teknisi',
+        ]);
+        User::create([
+            'name' => 'agus',
+            'email' => 'agus@example.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('88888888'),
+            'role' => 'teknisi',
+        ]);
+        User::create([
+            'name' => 'asri',
+            'email' => 'asri@example.com',
             'email_verified_at' => now(),
             'password' => Hash::make('88888888'),
             'role' => 'teknisi',
