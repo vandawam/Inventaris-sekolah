@@ -8886,8 +8886,8 @@ WCRollbackSection:AddParagraph({
 Config.WCRollbackPlotMode = Config.WCRollbackPlotMode or "My Plot"
 WCRollbackSection:AddDropdown({
     Title = "Player Plot",
-    Content = "Choose whose plot to water trees on",
-    Options = {"My Plot", "Friend's Plot"},
+    Content = "Choose whose plot to water trees on, or use saved position",
+    Options = {"My Plot", "Friend's Plot", "Saved Position"},
     Default = Config.WCRollbackPlotMode,
     Multi = false,
     Callback = function(val)
@@ -8956,11 +8956,10 @@ WCRollbackSection:AddToggle({
 
 -- Save Position feature
 Config.WCRollbackSavedPos = Config.WCRollbackSavedPos or nil
-Config.WCRollbackUseSavedPos = Config.WCRollbackUseSavedPos or false
 
 local wcSavedPosParagraph = WCRollbackSection:AddParagraph({
     Title = "Saved Position:",
-    Content = Config.WCRollbackSavedPos and ("X: " .. math.floor(Config.WCRollbackSavedPos.X) .. " Y: " .. math.floor(Config.WCRollbackSavedPos.Y) .. " Z: " .. math.floor(Config.WCRollbackSavedPos.Z)) or "Not saved yet"
+    Content = Config.WCRollbackSavedPos and ("X: " .. math.floor(Config.WCRollbackSavedPos.X) .. " Y: " .. math.floor(Config.WCRollbackSavedPos.Y) .. " Z: " .. math.floor(Config.WCRollbackSavedPos.Z)) or "Not saved yet (only used if 'Saved Position' mode is selected)"
 })
 
 WCRollbackSection:AddButton({
@@ -8978,15 +8977,6 @@ WCRollbackSection:AddButton({
                 notif("Position saved! (" .. text .. ")", 3, "WC Rollback")
             end
         end
-    end
-})
-
-WCRollbackSection:AddToggle({
-    Title = "Use Saved Position",
-    Content = "Move to saved position instead of following the tree",
-    Default = Config.WCRollbackUseSavedPos,
-    Callback = function(val)
-        Config.WCRollbackUseSavedPos = val
     end
 })
 
@@ -9024,6 +9014,83 @@ function startWateringCanRollbackLoop()
                 
                 local char = LocalPlayer.Character
                 
+                -- === SAVED POSITION MODE: skip all plot/tree detection ===
+                if plotMode == "Saved Position" then
+                    if not Config.WCRollbackSavedPos then
+                        notif("No saved position! Save a position first.", 3, "Error")
+                        task.wait(3)
+                        break
+                    end
+                    
+                    local swcTool = nil
+                    if char then
+                        swcTool = char:FindFirstChild("Super Watering Can")
+                    end
+                    if not swcTool then
+                        swcTool = LocalPlayer.Backpack:FindFirstChild("Super Watering Can")
+                    end
+                    
+                    if char and swcTool then
+                        -- Tween to saved position
+                        pcall(function()
+                            local hrp = char:FindFirstChild("HumanoidRootPart")
+                            if hrp then
+                                local sp = Config.WCRollbackSavedPos
+                                local targetCF = CFrame.new(sp.X, sp.Y, sp.Z)
+                                local distance = (hrp.Position - targetCF.Position).Magnitude
+                                if distance > 5 then
+                                    local humanoid = char:FindFirstChildOfClass("Humanoid")
+                                    local walkSpeed = humanoid and humanoid.WalkSpeed or 16
+                                    local duration = math.clamp(distance / walkSpeed, 0.3, 15)
+                                    local tween = TweenService:Create(hrp, TweenInfo.new(duration, Enum.EasingStyle.Linear), {CFrame = targetCF})
+                                    tween:Play()
+                                    tween.Completed:Wait()
+                                end
+                            end
+                        end)
+                        
+                        -- Place sprinkler once
+                        if not hasTeleported then
+                            hasTeleported = true
+                            task.wait(0.5)
+                            if Config.WCRollbackSprinkler then
+                                local ssTool = char:FindFirstChild("Super Sprinkler") or LocalPlayer.Backpack:FindFirstChild("Super Sprinkler")
+                                if ssTool then
+                                    pcall(function()
+                                        if ssTool.Parent ~= char then
+                                            local humanoid = char:FindFirstChildOfClass("Humanoid")
+                                            if humanoid then humanoid:EquipTool(ssTool) end
+                                        end
+                                        local sp = Config.WCRollbackSavedPos
+                                        local plotId = LocalPlayer:GetAttribute("PlotId") or 1
+                                        Networking.Place.PlaceSprinkler:Fire(Vector3.new(sp.X + 1.5, sp.Y, sp.Z), "Super Sprinkler", ssTool, plotId)
+                                    end)
+                                    task.wait(0.5)
+                                else
+                                    notif("Super Sprinkler not found in inventory!", 3, "Warning")
+                                end
+                            end
+                        end
+                        
+                        -- Water at saved position
+                        pcall(function()
+                            if swcTool.Parent ~= char then
+                                local humanoid = char:FindFirstChildOfClass("Humanoid")
+                                if humanoid then humanoid:EquipTool(swcTool) end
+                            end
+                            local sp = Config.WCRollbackSavedPos
+                            Networking.WateringCan.UseWateringCan:Fire(Vector3.new(sp.X, sp.Y, sp.Z), swcTool.Name, swcTool)
+                        end)
+                        usedWC = usedWC + 1
+                        task.wait(1)
+                    else
+                        if not swcTool then
+                            notif("Super Watering Can not found! Waiting...", 2, "Warning")
+                        end
+                        task.wait(2)
+                    end
+                else
+                -- === MY PLOT / FRIEND'S PLOT MODE ===
                 -- Find the correct plot
                 if not cachedPlot or not cachedPlot.Parent then
                     if plotMode == "My Plot" then
@@ -9092,17 +9159,11 @@ function startWateringCanRollbackLoop()
                 end
                 
                 if targetPlot and targetPlant and swcTool then
-                    -- Tween to position (saved or tree) at WalkSpeed
+                    -- Tween to tree at WalkSpeed
                     pcall(function()
                         local hrp = char:FindFirstChild("HumanoidRootPart")
                         if hrp then
-                            local targetCF
-                            if Config.WCRollbackUseSavedPos and Config.WCRollbackSavedPos then
-                                local sp = Config.WCRollbackSavedPos
-                                targetCF = CFrame.new(sp.X, sp.Y, sp.Z)
-                            else
-                                targetCF = targetPlant:GetPivot() + Vector3.new(0, 4, 0)
-                            end
+                            local targetCF = targetPlant:GetPivot() + Vector3.new(0, 4, 0)
                             local distance = (hrp.Position - targetCF.Position).Magnitude
                             if distance > 5 then
                                 local humanoid = char:FindFirstChildOfClass("Humanoid")
@@ -9162,6 +9223,7 @@ function startWateringCanRollbackLoop()
                     end
                     task.wait(2)
                 end
+                end -- end of My Plot / Friend's Plot else block
             end
             
             if not Config.AutoWateringCanRollback then break end
