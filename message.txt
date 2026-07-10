@@ -9076,23 +9076,49 @@ function startWateringCanRollbackLoop()
                         
                         -- Place sprinkler once
                         if not hasTeleported then
-                            hasTeleported = true
-                            task.wait(0.5)
-                            if Config.WCRollbackSprinkler then
-                                local ssTool = char:FindFirstChild("Super Sprinkler") or LocalPlayer.Backpack:FindFirstChild("Super Sprinkler")
-                                if ssTool then
-                                    pcall(function()
-                                        if ssTool.Parent ~= char then
-                                            local humanoid = char:FindFirstChildOfClass("Humanoid")
-                                            if humanoid then humanoid:EquipTool(ssTool) end
-                                        end
-                                        local sp = Config.WCRollbackSavedPos
-                                        local plotId = LocalPlayer:GetAttribute("PlotId") or 1
-                                        Networking.Place.PlaceSprinkler:Fire(Vector3.new(sp.X + 1.5, sp.Y, sp.Z), "Super Sprinkler", ssTool, plotId)
-                                    end)
-                                    task.wait(0.5)
-                                else
-                                    notif("Super Sprinkler not found in inventory!", 3, "Warning")
+                            local hrp = char:FindFirstChild("HumanoidRootPart")
+                            local sp = Config.WCRollbackSavedPos
+                            local spVector = Vector3.new(sp.X, sp.Y, sp.Z)
+                            
+                            if hrp and (hrp.Position - spVector).Magnitude <= 15 then
+                                hasTeleported = true
+                                if Config.WCRollbackSprinkler then
+                                    local ssTool = char:FindFirstChild("Super Sprinkler") or LocalPlayer.Backpack:FindFirstChild("Super Sprinkler")
+                                    if ssTool then
+                                        pcall(function()
+                                            if ssTool.Parent ~= char then
+                                                local humanoid = char:FindFirstChildOfClass("Humanoid")
+                                                if humanoid then humanoid:EquipTool(ssTool) end
+                                            end
+                                            
+                                            -- Verify position again right before firing
+                                            if (hrp.Position - spVector).Magnitude <= 15 then
+                                                local plotId = LocalPlayer:GetAttribute("PlotId") or 1
+                                                
+                                                local gardens = workspace:FindFirstChild("Gardens")
+                                                if gardens then
+                                                    local closestDist = math.huge
+                                                    for _, plot in ipairs(gardens:GetChildren()) do
+                                                        local core = plot:FindFirstChild("Signs") and plot.Signs:FindFirstChild("Garden") and plot.Signs.Garden:FindFirstChild("CorePart")
+                                                        if core then
+                                                            local dist = (core.Position - spVector).Magnitude
+                                                            if dist < closestDist then
+                                                                closestDist = dist
+                                                                plotId = tonumber(string.match(plot.Name, "%d+")) or plotId
+                                                            end
+                                                        end
+                                                    end
+                                                end
+                                                
+                                                Networking.Place.PlaceSprinkler:Fire(spVector + Vector3.new(1.5, 0, 0), "Super Sprinkler", ssTool, plotId)
+                                                task.wait(0.5)
+                                            else
+                                                hasTeleported = false -- Retry next loop
+                                            end
+                                        end)
+                                    else
+                                        notif("Super Sprinkler not found in inventory!", 3, "Warning")
+                                    end
                                 end
                             end
                         end
@@ -9203,24 +9229,32 @@ function startWateringCanRollbackLoop()
                     
                     -- Place Super Sprinkler once per cycle
                     if not hasTeleported then
-                        hasTeleported = true
-                        task.wait(0.5)
+                        local hrp = char:FindFirstChild("HumanoidRootPart")
+                        local targetPos = targetPlant:GetPivot().Position
                         
-                        if Config.WCRollbackSprinkler then
-                            local ssTool = char:FindFirstChild("Super Sprinkler") or LocalPlayer.Backpack:FindFirstChild("Super Sprinkler")
-                            if ssTool then
-                                pcall(function()
-                                    if ssTool.Parent ~= char then
-                                        local humanoid = char:FindFirstChildOfClass("Humanoid")
-                                        if humanoid then humanoid:EquipTool(ssTool) end
-                                    end
-                                    local pos = targetPlant:GetPivot().Position
-                                    local plotId = tonumber(string.match(targetPlot.Name, "%d+")) or 1
-                                    Networking.Place.PlaceSprinkler:Fire(pos + Vector3.new(1.5, 0, 0), "Super Sprinkler", ssTool, plotId)
-                                end)
-                                task.wait(0.5)
-                            else
-                                notif("Super Sprinkler not found in inventory!", 3, "Warning")
+                        if hrp and (hrp.Position - targetPos).Magnitude <= 15 then
+                            hasTeleported = true
+                            if Config.WCRollbackSprinkler then
+                                local ssTool = char:FindFirstChild("Super Sprinkler") or LocalPlayer.Backpack:FindFirstChild("Super Sprinkler")
+                                if ssTool then
+                                    pcall(function()
+                                        if ssTool.Parent ~= char then
+                                            local humanoid = char:FindFirstChildOfClass("Humanoid")
+                                            if humanoid then humanoid:EquipTool(ssTool) end
+                                        end
+                                        
+                                        -- Verify position again right before firing
+                                        if (hrp.Position - targetPos).Magnitude <= 15 then
+                                            local plotId = tonumber(string.match(targetPlot.Name, "%d+")) or 1
+                                            Networking.Place.PlaceSprinkler:Fire(targetPos + Vector3.new(1.5, 0, 0), "Super Sprinkler", ssTool, plotId)
+                                            task.wait(0.5)
+                                        else
+                                            hasTeleported = false -- Retry next loop
+                                        end
+                                    end)
+                                else
+                                    notif("Super Sprinkler not found in inventory!", 3, "Warning")
+                                end
                             end
                         end
                     end
