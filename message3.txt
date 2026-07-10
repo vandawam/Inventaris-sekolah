@@ -9027,6 +9027,7 @@ function startWateringCanRollbackLoop()
             notif("Watering " .. targetTreeName .. " " .. maxWC .. " times (" .. plotMode .. ")...", 3, "WC Rollback")
             
             local cachedPlot = nil
+            local wcNotFoundCount = 0
             local function isSprinklerNearby(pos, radius)
                 local gardens = workspace:FindFirstChild("Gardens")
                 if gardens then
@@ -9074,6 +9075,7 @@ function startWateringCanRollbackLoop()
                     end
                     
                     if char and swcTool then
+                        wcNotFoundCount = 0
                         -- Tween to saved position
                         pcall(function()
                             local hrp = char:FindFirstChild("HumanoidRootPart")
@@ -9146,6 +9148,12 @@ function startWateringCanRollbackLoop()
                     else
                         if not swcTool then
                             notif("Super Watering Can not found! Waiting...", 2, "Warning")
+                            wcNotFoundCount = wcNotFoundCount + 1
+                            if wcNotFoundCount >= 5 then
+                                notif("Watering can missing for 5 cycles. Rejoining...", 3, "Error")
+                                task.wait(1)
+                                break
+                            end
                         end
                         task.wait(2)
                     end
@@ -9219,6 +9227,7 @@ function startWateringCanRollbackLoop()
                 end
                 
                 if targetPlot and targetPlant and swcTool then
+                    wcNotFoundCount = 0
                     -- Tween to tree at WalkSpeed
                     pcall(function()
                         local hrp = char:FindFirstChild("HumanoidRootPart")
@@ -9278,6 +9287,12 @@ function startWateringCanRollbackLoop()
                         end
                     elseif not swcTool then
                         notif("Super Watering Can not found! Waiting...", 2, "Warning")
+                        wcNotFoundCount = wcNotFoundCount + 1
+                        if wcNotFoundCount >= 5 then
+                            notif("Watering can missing for 5 cycles. Rejoining...", 3, "Error")
+                            task.wait(1)
+                            break
+                        end
                     elseif not targetPlant then
                         notif(targetTreeName .. " not found on " .. (plotMode == "My Plot" and "your" or "friend's") .. " plot!", 2, "Error")
                     end
